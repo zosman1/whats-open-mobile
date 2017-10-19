@@ -35,6 +35,7 @@ export class HomeScreen extends Component {
 
     //getting new data from server
     fetchData().then((data) => {
+      if (!data) return;      
       this.setState({
         Facilities: data
       });
