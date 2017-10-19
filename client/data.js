@@ -13,8 +13,9 @@ export function findSchedule(day, open_times){ // 0-6 0 being monday
             result = element;
         }
     });
-    return result
+    return result;
 }
+
 function isInTimes (realTime, startTime, endTime){ // all in 21:00:00 format
     if((parseTime(realTime) >= parseTime(startTime)) && (parseTime(realTime) < parseTime(endTime))){
         return true; 
@@ -60,3 +61,31 @@ export async function fetchData() {
   
 }
  
+export function dayToString(dayInt){
+    switch(dayInt){
+        case 0:
+            return "Monday";
+            break;
+        case 1:
+            return "Tuesday";
+            break;
+        case 2:
+            return "Wensday";
+            break;
+        case 3:
+            return "Thursday";
+            break;
+        case 4:
+            return "Friday";
+            break;
+        case 5:
+            return "Saturday";
+            break;
+        case 6:
+            return "Sunday";
+            break;
+        default:
+            return -1;
+            break;
+    }
+}

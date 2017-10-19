@@ -1,12 +1,12 @@
-import 'react-native';
-import React from 'react';
-import Index from '../client/index.js';
+// import 'react-native';
+// import React from 'react';
+// import Index from '../client/index.js';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+// // Note: test renderer must be required after react-native.
+// import renderer from 'react-test-renderer';
 
-it('renders correctly', () => {
-  const tree = renderer.create(
-    <Index />
-  );
-});
+// it('renders correctly', () => {
+//   const tree = renderer.create(
+//     <Index />
+//   );
+// });

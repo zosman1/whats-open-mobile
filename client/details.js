@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
-import { fetchData, isOpen } from './data';
+import { fetchData, isOpen, dayToString } from './data';
 
-
+ 
 export class Details extends Component {
     constructor(props){
         super(props);
@@ -26,6 +26,14 @@ export class Details extends Component {
     render () {
         return (
             <ScrollView>
+                {
+                    this.state.facility.open_times.map((day) => {
+                        return (
+                            <Text> {dayToString(day.start_day)}</Text>
+                        );
+
+                    })
+                }
                 <Text> {JSON.stringify(this.state.facility)} </Text>
             </ScrollView>
         );
