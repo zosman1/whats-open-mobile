@@ -17,10 +17,19 @@ export default class App extends Component {
     }
   }
   componentWillMount() {
+    //getting stored data on phone for offline use
+    let localData = await AsyncStorage.getItem('Facilities');
+    if(this.state.Facilities == null){
+      this.setState({
+        Facilities: localData
+      })
+    }
+    //getting new data from server
     fetchData().then((data) => {
       this.setState({
         Facilities: data
       });
+      AsyncStorage.setItem('Facilities', JSON.stringify(data));
      })
   }
   render() {
