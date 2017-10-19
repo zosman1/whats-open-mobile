@@ -27,12 +27,12 @@ export class Details extends Component {
         return (
             <ScrollView>
                 {
-                    this.state.facility.open_times.map((day) => {
-                        return (
-                            <Text> {dayToString(day.start_day)}</Text>
-                        );
+                    // this.state.facility.open_times.map((day) => {
+                    //     return (
+                    //         <Text> {dayToString(day.start_day)}</Text>
+                    //     );
 
-                    })
+                    // })
                 }
                 <Text> {JSON.stringify(this.state.facility)} </Text>
             </ScrollView>
