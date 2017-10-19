@@ -14,7 +14,6 @@ export default class App extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-      
       {
         Facilitys.map((facility) => {
           return (
@@ -28,7 +27,6 @@ export default class App extends Component {
           console.warn('ran');
         })
       }
-
       </ScrollView>
     );
   }
