@@ -14,7 +14,6 @@ export function findSchedule(day, open_times){ // 0-6 0 being monday
             console.error("start day != end day");
             return;
         }
-        console.warn(`day: ${day} start: ${element.start_day}`);
         
         if(Number(element.start_day) == Number(day)){
             result = element;

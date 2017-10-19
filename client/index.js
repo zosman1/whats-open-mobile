@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
 import Button from 'react-native-button';
 import {fetchData} from './data';
@@ -18,12 +19,13 @@ export default class App extends Component {
   }
   componentWillMount() {
     //getting stored data on phone for offline use
-    let localData = await AsyncStorage.getItem('Facilities');
     if(this.state.Facilities == null){
+      let localData = await AsyncStorage.getItem('Facilities');
       this.setState({
         Facilities: localData
       })
     }
+
     //getting new data from server
     fetchData().then((data) => {
       this.setState({
