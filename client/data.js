@@ -49,7 +49,6 @@ export function isOpen(facility, inDate) {
 }
 
 
-
 export async function fetchData() {
     try {
         let response = await fetch('https://api.srct.gmu.edu/whatsopen/v2/facilities/?format=json');

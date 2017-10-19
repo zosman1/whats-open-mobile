@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
-import {fetchData, isOpen} from './data';
+import { fetchData, isOpen } from './data';
 
 
 export class Details extends Component {
