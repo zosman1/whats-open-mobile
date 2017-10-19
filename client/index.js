@@ -7,15 +7,28 @@ import {
   ScrollView
 } from 'react-native';
 import Button from 'react-native-button';
-import { Facilitys } from './data';
-
+import {fetchData} from './data';
 
 export default class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      Facilities: null
+    }
+  }
+  componentWillMount() {
+    fetchData().then((data) => {
+      this.setState({
+        Facilities: data
+      });
+     })
+  }
   render() {
     return (
       <ScrollView style={styles.container}>
       {
-        Facilitys.map((facility) => {
+        (this.state.Facilities != null) > 0 &&
+        this.state.Facilities.map((facility) => {
           return (
             <Button
               containerStyle={{margin: 1, padding:10, height:70, overflow:'hidden'}}
