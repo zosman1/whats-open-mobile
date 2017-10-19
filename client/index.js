@@ -7,16 +7,22 @@ import {
   ScrollView,
   AsyncStorage
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
 import {fetchData, isOpen} from './data';
+import {Details} from './details'
 
-export default class App extends Component {
+export class HomeScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
       Facilities: null
     }
   }
+  static navigationOptions = {
+    title: "What's Open?",
+  };  
+
   componentWillMount() {
     //getting stored data on phone for offline use
     if(this.state.Facilities == null){
@@ -35,20 +41,11 @@ export default class App extends Component {
       AsyncStorage.setItem('Facilities', JSON.stringify(data));
      })
   }
-  render() {
-    // let openFacilities = [];
-    // let closedFacilities = [];
-    // this.state.Facilities.forEach((facility) => {
-    //   if(isOpen(facility)){
-    //     openFacilities.push(facility);
-    //   } else {
-    //     closedFacilities.push(facility);
-    //   }
-    // });
 
-    // this.state.Facilities.forEach((facility) => {
-    //   facility["isOpen"] = isOpen(facility);
-    // })
+
+  render() {
+    const { navigate } = this.props.navigation;
+    
 
     if (this.state.Facilities != null){ 
       this.state.Facilities.sort((a,b) => {
@@ -69,6 +66,7 @@ export default class App extends Component {
             <Button
               key ={facility.slug}
               containerStyle={statusStyle}
+              onPress={() => navigate('Details', { facility: facility })} 
             >
             <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
 
@@ -106,3 +104,9 @@ const styles = StyleSheet.create({
       backgroundColor: 'red'
     }
 });
+
+ const App = StackNavigator({
+  Home: { screen: HomeScreen },
+  Details: { screen: Details }
+});
+export default App;
