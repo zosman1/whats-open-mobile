@@ -67,6 +67,7 @@ export default class App extends Component {
 
           return (
             <Button
+              key ={facility.slug}
               containerStyle={statusStyle}
             >
             <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
