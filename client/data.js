@@ -55,7 +55,7 @@ export async function fetchData() {
         let responseJson = await response.json();
         return responseJson;
       } catch(error) {
-        console.error(error);
+          return;
       }
   
 }
