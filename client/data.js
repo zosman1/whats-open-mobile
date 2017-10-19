@@ -9,13 +9,7 @@ export function findSchedule(day, open_times){ // 0-6 0 being monday
     //this function finds what day applies to us, and returns that
     let result = -1; 
     open_times.forEach((element) => {
-        if (element.start_day != element.end_day) {
-            throw "start day != end day";
-            console.error("start day != end day");
-            return;
-        }
-        
-        if(Number(element.start_day) == Number(day)){
+        if((day >= element.end_day) && (day <= element.start_day)){
             result = element;
         }
     });
