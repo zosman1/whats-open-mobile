@@ -24,17 +24,19 @@ export class HomeScreen extends Component {
   };  
 
   componentWillMount() {
+    // AsyncStorage.clear();
     //getting stored data on phone for offline use
-    if(this.state.Facilities == null){
-      AsyncStorage.getItem('Facilities').then((localData) =>{
-        this.setState({
-          Facilities: JSON.parse(localData)
-        });
-      });
-    }
+    // if(this.state.Facilities == null){
+    //   AsyncStorage.getItem('Facilities').then((localData) =>{
+    //     this.setState({
+    //       Facilities: JSON.parse(localData)
+    //     });
+    //   });
+    // }
 
     //getting new data from server
     fetchData().then((data) => {
+      // console.warn(data);
       if (!data) return;      
       this.setState({
         Facilities: data
@@ -48,20 +50,20 @@ export class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     
 
-    if (this.state.Facilities != null){ 
-      this.state.Facilities.sort((a,b) => {
-        if (isOpen(a) == isOpen(b)) return 0;
-        if (isOpen(a) && !isOpen(b)) return -1;
-        if (!isOpen(a) && isOpen(b)) return 1;
-      });
-    }
+    // if (this.state.Facilities != null){ 
+    //   this.state.Facilities.sort((a,b) => {
+    //     if (isOpen(a) == isOpen(b)) return 0;
+    //     if (isOpen(a) && !isOpen(b)) return -1;
+    //     if (!isOpen(a) && isOpen(b)) return 1;
+    //   });
+    // }
     return (
       <ScrollView style={styles.container}>
       {
         (this.state.Facilities != null) > 0 &&
         this.state.Facilities.map((facility) => {
           let statusStyle = styles.closed;
-          if (isOpen(facility)) statusStyle = styles.open;
+          if (facility.isOpen) statusStyle = styles.open;
 
           return (
             <Button
