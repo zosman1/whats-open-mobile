@@ -50,34 +50,30 @@ export function isOpen(facility, inDate) {
 
 
 export async function fetchData() {
-    console.warn('fetchData');
     // let result;
     let responseOpenJson;
-    let responceClosedJson;
+    let responseClosedJson;
     try {
         let responseOpen = await fetch('https://api.srct.gmu.edu/whatsopen/v2/facilities/?open_now=True&format=json');
-        let responceClosed = await fetch('https://api.srct.gmu.edu/whatsopen/v2/facilities/?closed_now=True&format=json')
+        let responseClosed = await fetch('https://api.srct.gmu.edu/whatsopen/v2/facilities/?closed_now=True&format=json')
         responseOpenJson = await responseOpen.json();
-        responceClosedJson = await responceClosed.json();
+        responseClosedJson = await responseClosed.json();
       } catch(error) {
           return;
       }
 
-    console.warn('got data');
       
-    console.warn(responseOpenJson);
 
     responseOpenJson.forEach((element) => {
         element['isOpen'] = true;
     });
-    responceClosedJson.forEach((element) => {
+    responseClosedJson.forEach((element) => {
         element['isOpen'] = false;
     });
-    console.warn('done for loops');
 
     let result = responseOpenJson;
 
-    responceClosedJson.forEach((element) => {
+    responseClosedJson.forEach((element) => {
         result.push(element);
     });
 
