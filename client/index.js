@@ -67,7 +67,7 @@ export class HomeScreen extends Component {
 
           return (
             <Button
-              key ={facility.slug}
+              key={facility.slug}
               containerStyle={statusStyle}
               onPress={() => navigate('Details', { facility: facility })} 
             >
