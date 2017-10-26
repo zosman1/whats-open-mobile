@@ -39,9 +39,9 @@ export class Details extends Component {
                                 key={day.start_day}
                                 >
                                 <Text style={styles.dayOfWeek}> {dayToString(day.start_day)}</Text>
-                                <Text style={styles.hours}>Start Time: {day.start_time}</Text>
-                                <Text style={styles.hours}>End Time: {day.end_time}</Text>
-                                
+                                {/* <Text style={styles.hours}>Start Time: {day.start_time}</Text>
+                                <Text style={styles.hours}>End Time: {day.end_time}</Text> */}
+                                <Text style={styles.hours}> {day.start_time} - {day.end_time}</Text>
                                 </View>
                                 
                             );
