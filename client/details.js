@@ -32,15 +32,12 @@ export class Details extends Component {
                 <View style={{height:2}}></View>
                     {
                         this.state.facility.main_schedule.open_times.map((day) => {
-                            // console.warn(day);
                             return (
                                 <View 
                                 style={styles.scheduleContainer}
                                 key={day.start_day}
                                 >
                                 <Text style={styles.dayOfWeek}> {dayToString(day.start_day)}</Text>
-                                {/* <Text style={styles.hours}>Start Time: {day.start_time}</Text>
-                                <Text style={styles.hours}>End Time: {day.end_time}</Text> */}
                                 <Text style={styles.hours}> {day.start_time} - {day.end_time}</Text>
                                 </View>
                                 

@@ -81,6 +81,10 @@ export async function fetchData() {
     return result;
   
 }
+
+export function milToStandard(input){
+    return moment(input, 'HH:mm:ss').format('h:mm:ss A');
+}
  
 export function dayToString(dayInt){
     switch(dayInt){
