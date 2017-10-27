@@ -26,7 +26,7 @@ export class Details extends Component {
 
     render () {
         return (
-            <View style={{flex:1,backgroundColor: '#A0C9C1'}}>
+            <View style={styles.container}>
                 <Text style={styles.facilityType}> {this.state.facility.facility_category.name} </Text>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={{height:2}}></View>
@@ -52,8 +52,11 @@ export class Details extends Component {
 
 }
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#A0C9C1'
+    },
     scrollContainer: {
-      backgroundColor: '#A0C9C1',
       flexDirection: 'column',
       alignItems: 'stretch',
     },
