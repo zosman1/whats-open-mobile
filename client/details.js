@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
-import { fetchData, isOpen, dayToString } from './data';
+import { fetchData, isOpen, dayToString, milToStandard } from './data';
 
  
 export class Details extends Component {
@@ -38,7 +38,7 @@ export class Details extends Component {
                                 key={day.start_day}
                                 >
                                 <Text style={styles.dayOfWeek}> {dayToString(day.start_day)}</Text>
-                                <Text style={styles.hours}> {day.start_time} - {day.end_time}</Text>
+                                <Text style={styles.hours}> {milToStandard(day.start_time)} - {milToStandard(day.end_time)}</Text>
                                 </View>
                                 
                             );
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
         },
     facilityType: {
         fontSize: 30,
+        fontWeight: 'bold',
         // textAlign: 'center',
     },
     dayOfWeek: {

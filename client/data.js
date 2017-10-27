@@ -1,3 +1,4 @@
+import moment from 'moment';
 function parseTime(time){
     //takes in time ex "23:00:00"
     //returns a value that can be directly compared with < > == etc
