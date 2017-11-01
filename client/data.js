@@ -96,7 +96,7 @@ export function dayToString(dayInt){
             return "Tuesday";
             break;
         case 2:
-            return "Wensday";
+            return "Wednesday";
             break;
         case 3:
             return "Thursday";
