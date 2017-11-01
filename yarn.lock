@@ -3394,6 +3394,10 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-letter-spacing@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-letter-spacing/-/react-native-letter-spacing-0.0.4.tgz#5e620682cf78a8fa7cd9b7cf0429af95f3875dba"
+
 react-native-tab-view@^0.0.69:
   version "0.0.69"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.69.tgz#f52d4354a98a382f10eb5fcf61db5216c91dc7e7"
