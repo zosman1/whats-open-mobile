@@ -5,11 +5,14 @@ import {
   Text,
   View,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from 'react-native';
+import { Cell, Section, TableView } from 'react-native-tableview-simple';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
 import { fetchData, isOpen, dayToString, milToStandard } from './data';
+
 
  
 export class Details extends Component {
@@ -24,54 +27,43 @@ export class Details extends Component {
         title: navigation.state.params.facility.facility_name
       });
 
-    render () {
+    render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.facilityType}> {this.state.facility.facility_category.name} </Text>
-                <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={{height:2}}></View>
-                    {
-                        this.state.facility.main_schedule.open_times.map((day) => {
-                            return (
-                                <View 
-                                style={styles.scheduleContainer}
-                                key={day.start_day}
-                                >
-                                <Text style={styles.dayOfWeek}> {dayToString(day.start_day)}</Text>
-                                <Text style={styles.hours}> {milToStandard(day.start_time)} - {milToStandard(day.end_time)}</Text>
-                                </View>
-                                
-                            );
+                <TableView>
+                    <Section sectionTintColor='white' header='Hours'>
+                        {
+                            this.state.facility.main_schedule.open_times.map((schedule,i = 0) => {
+                                return (
+                                    <Cell
+                                        cellStyle="RightDetail"
+                                        title={dayToString(schedule.start_day)}
+                                        detail={`${milToStandard(schedule.start_time)} - ${milToStandard(schedule.end_time)}`}
+                                        key={i}
 
-                        })
-                    }
-                </ScrollView>
+                                    />
+                                )
+                                i++;
+                            })
+                        }
+                    </Section>
+
+
+                </TableView>
             </View>
         );
     }
-
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#A0C9C1'
+        backgroundColor: 'white'
     },
-    scrollContainer: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-    },
-    scheduleContainer: {
-        margin: 6,
-        padding: 10,
-        height: 70,
-        backgroundColor: 'darkgrey',
-        // justifyContent: 'center',
-        alignItems: 'center',
-        
-        },
     facilityType: {
         fontSize: 30,
         fontWeight: 'bold',
+        padding: 10
         // textAlign: 'center',
     },
     dayOfWeek: {
@@ -80,22 +72,4 @@ const styles = StyleSheet.create({
     hours: {
         fontSize: 15
     }
-    // facilityName: {
-    //   textAlign: 'center',
-    //   fontSize:20,    
-    // },
-    // open: {
-    //     margin: 1,
-    //     padding: 10,
-    //     height: 70,
-    //     overflow: 'hidden',
-    //     backgroundColor: 'green'
-    //   },
-    //   closed: {
-    //     margin: 1,
-    //     padding: 10,
-    //     height: 70,
-    //     overflow: 'hidden',
-    //     backgroundColor: 'red'
-    //   }
   });
