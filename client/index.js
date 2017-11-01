@@ -72,10 +72,9 @@ export class HomeScreen extends Component {
               onPress={() => navigate('Details', { facility: facility })} 
             >
             <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
-
+            
             </Button>
           );
-          console.warn('ran');
         })
       }
       </ScrollView>
