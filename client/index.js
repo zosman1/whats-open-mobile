@@ -46,6 +46,7 @@ export class HomeScreen extends Component {
   }
 
 
+
   render() {
     const { navigate } = this.props.navigation;
     
