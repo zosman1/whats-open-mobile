@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
-import {fetchData, isOpen} from './data';
-import {Details} from './details'
+import { fetchData, isOpen, sortFacilitys } from './data';
+import { isFacilityOpen, calcTimeTillOpen, calcTimeTillClose } from './isOpen';
+import { Details } from './details'
 
-export class HomeScreen extends Component {
+export class MainScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -25,21 +26,19 @@ export class HomeScreen extends Component {
 
   componentWillMount() {
     // AsyncStorage.clear();
-    //getting stored data on phone for offline use
-    // if(this.state.Facilities == null){
-    //   AsyncStorage.getItem('Facilities').then((localData) =>{
-    //     this.setState({
-    //       Facilities: JSON.parse(localData)
-    //     });
-    //   });
-    // }
-
+    // getting stored data on phone for offline use
+    if(this.state.Facilities == null){
+      AsyncStorage.getItem('Facilities').then((localData) => {
+        this.setState({
+          Facilities: sortFacilitys(JSON.parse(localData))          
+        });
+      });
+    }
     //getting new data from server
     fetchData().then((data) => {
-      // console.warn(data);
       if (!data) return;      
       this.setState({
-        Facilities: data
+        Facilities: sortFacilitys(data)
       });
       AsyncStorage.setItem('Facilities', JSON.stringify(data));
      })
@@ -53,18 +52,19 @@ export class HomeScreen extends Component {
 
     // if (this.state.Facilities != null){ 
     //   this.state.Facilities.sort((a,b) => {
-    //     if (isOpen(a) == isOpen(b)) return 0;
-    //     if (isOpen(a) && !isOpen(b)) return -1;
-    //     if (!isOpen(a) && isOpen(b)) return 1;
+    //     if (isFacilityOpen(a) == isFacilityOpen(b)) return 0;
+    //     if (isFacilityOpen(a) && !isFacilityOpen(b)) return -1;
+    //     if (!isFacilityOpen(a) && isFacilityOpen(b)) return 1;
     //   });
     // }
+    // sortFacilitys(this.state.Facilities);
     return (
       <ScrollView style={styles.container}>
       {
         (this.state.Facilities != null) > 0 &&
         this.state.Facilities.map((facility) => {
           let statusStyle = styles.closed;
-          if (facility.isOpen) statusStyle = styles.open;
+          if (isFacilityOpen(facility)) statusStyle = styles.open;
 
           return (
             <Button
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 });
 
  const App = StackNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: MainScreen },
   Details: { screen: Details }
 });
 export default App;
