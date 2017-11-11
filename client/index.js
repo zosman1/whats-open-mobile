@@ -5,7 +5,8 @@ import {
   Text,
   View,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
@@ -63,18 +64,37 @@ export class MainScreen extends Component {
       {
         (this.state.Facilities != null) > 0 &&
         this.state.Facilities.map((facility) => {
-          let statusStyle = styles.closed;
-          if (isFacilityOpen(facility)) statusStyle = styles.open;
+          // let statusStyle = styles.closed;
+          // if (isFacilityOpen(facility)) statusStyle = styles.open;
 
           return (
-            <Button
-              key={facility.slug}
-              containerStyle={statusStyle}
-              onPress={() => navigate('Details', { facility: facility })} 
-            >
-            <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
+            // <Button
+            //   key={facility.slug}
+            //   containerStyle={statusStyle}
+            //   onPress={() => navigate('Details', { facility: facility })} 
+            // >
+            // <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
             
-            </Button>
+            // </Button>
+
+            <TouchableHighlight
+            key={facility.slug}
+            style={styles.facility}
+            onPress={() => navigate('Details', {facility: facility })}
+            >
+            <View style={{justifyContent:'center', flexDirection: 'row'}}>
+
+              <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
+
+              <View style={{justifyContent:'center'}}>
+                <View style={isFacilityOpen(facility) ? styles.open : styles.closed}> 
+                  <Text style={{fontSize: 15, fontWeight: 'bold'}}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
+                </View>
+              </View>
+
+
+            </View> 
+            </TouchableHighlight>
           );
         })
       }
@@ -87,24 +107,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+    paddingTop: 5
   },
   facilityName: {
-    textAlign: 'center',
-    fontSize:20,    
+    padding: 20,
+    fontSize: 19, 
+    textAlign: 'center'
+
   },
   open: {
-      margin: 1,
       padding: 10,
-      height: 70,
-      overflow: 'hidden',
-      backgroundColor: 'green'
+      height: 30,
+      justifyContent: 'center',
+      backgroundColor: 'green',
+      borderRadius: 10,
+      padding: 5
     },
     closed: {
-      margin: 1,
-      padding: 10,
+      padding: 10,      
+      height: 30,   
+      justifyContent: 'center',      
+      backgroundColor: 'red',
+      borderRadius: 10,
+      padding: 5
+    },
+    facility: {
+      margin: 5,
       height: 70,
       overflow: 'hidden',
-      backgroundColor: 'red'
+      backgroundColor: '#e8e3be',
+      borderRadius: 10,
+      justifyContent: 'center'
     }
 });
 
