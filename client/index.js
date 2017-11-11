@@ -80,24 +80,22 @@ export class MainScreen extends Component {
             <TouchableHighlight
             key={facility.slug}
             style={styles.facility}
+            underlayColor={isFacilityOpen(facility) ? '#006633' : '#AC1D37'}
             onPress={() => navigate('Details', {facility: facility })}
             >
             <View style={{justifyContent:'center', flexDirection: 'row'}}>
-
-              <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
-
-              <View style={{justifyContent:'center'}}>
+              <Text style={styles.facilityName}>{facility.facility_name} ❯ </Text>
+              <View style={{justifyContent:'center', margin: 7}}>
                 <View style={isFacilityOpen(facility) ? styles.open : styles.closed}> 
-                  <Text style={{fontSize: 15, fontWeight: 'bold'}}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
+                  <Text style={{color: '#FFCC33', fontSize: 15, fontWeight: 'bold'}}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
                 </View>
               </View>
-
-
             </View> 
             </TouchableHighlight>
           );
         })
       }
+      <View style={{height: 10}} />
       </ScrollView>
     );
   }
@@ -107,12 +105,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    paddingTop: 5
+    paddingTop: 10,
   },
   facilityName: {
-    padding: 20,
+    // padding: 20,
+    flex: 1,
+    margin: 10,
     fontSize: 19, 
-    textAlign: 'center'
+    textAlign: 'center',
+    textAlign: 'left'
 
   },
   open: {
@@ -132,7 +133,8 @@ const styles = StyleSheet.create({
       padding: 5
     },
     facility: {
-      margin: 5,
+      margin: 9,
+      marginTop: 0,
       height: 70,
       overflow: 'hidden',
       backgroundColor: '#e8e3be',
