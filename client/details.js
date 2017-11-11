@@ -45,12 +45,9 @@ export class Details extends Component {
                     <Text style={styles.facilityType}>{this.state.facility.facility_category.name}</Text>
                     <MyText letterSpacing={1.4} style={styles.facilityLocation}>{this.state.facility.facility_location.building.toUpperCase()}</MyText>
                 </View> 
-
-                {/* <TableView> */}
-                        {
-    
-                            !this.state.facility[this.state.scheduleType].twenty_four_hours ?
-                            <TableView>
+                    {
+                        !this.state.facility[this.state.scheduleType].twenty_four_hours ?
+                        <TableView>
                             <Section sectionTintColor='#F7F7F7' header='Hours'>
                                 {
                                     this.state.facility[this.state.scheduleType].open_times.map((schedule,i = 0) => {
@@ -67,15 +64,13 @@ export class Details extends Component {
                                     })
                                 }
                                 </Section>
-                                </TableView>
-                            :
-                                <View style={styles.twentyFourHours}> 
-                                    <Text style={{fontSize: 30,fontWeight: 'bold'}}>Always Open</Text>
-                                </View>
-                        }
-
-                {/* </TableView> */}
-            </View>
+                            </TableView>
+                        :
+                            <View style={styles.twentyFourHours}> 
+                                <Text style={{fontSize: 30,fontWeight: 'bold'}}>Always Open</Text>
+                            </View>
+                    }
+                </View>
         );
     }
 }
