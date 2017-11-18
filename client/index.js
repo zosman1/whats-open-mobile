@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
       marginTop: 0,
       height: 70,
       overflow: 'hidden',
-      backgroundColor: '#F5FCFF',
+      backgroundColor: '#eaecef',
       borderRadius: 10,
       justifyContent: 'center'
     }
