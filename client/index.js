@@ -84,10 +84,10 @@ export class MainScreen extends Component {
             onPress={() => navigate('Details', {facility: facility })}
             >
             <View style={{justifyContent:'center', flexDirection: 'row'}}>
-              <Text style={styles.facilityName}>{facility.facility_name} ❯ </Text>
+              <Text style={styles.facilityName}>{facility.facility_name}</Text>
               <View style={{justifyContent:'center', margin: 7}}>
-                <View style={isFacilityOpen(facility) ? styles.open : styles.closed}> 
-                  <Text style={{color: '#FFCC33', fontSize: 15, fontWeight: 'bold'}}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
+                <View style={isFacilityOpen(facility) ? styles.openView : styles.closedView}> 
+                  <Text style={isFacilityOpen(facility) ? styles.openText : styles.closedText}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
                 </View>
               </View>
             </View> 
@@ -116,28 +116,42 @@ const styles = StyleSheet.create({
     textAlign: 'left'
 
   },
-  open: {
+  openText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color:'green'
+  },
+  closedText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color:'red'
+  },
+  openView: {
       padding: 10,
       height: 30,
       justifyContent: 'center',
-      backgroundColor: 'green',
+      // backgroundColor: 'green',
       borderRadius: 10,
-      padding: 5
+      padding: 5,
+      borderWidth: 2,
+      borderColor: 'green'
     },
-    closed: {
+    closedView: {
       padding: 10,      
       height: 30,   
       justifyContent: 'center',      
-      backgroundColor: 'red',
+      // backgroundColor: 'red',
       borderRadius: 10,
-      padding: 5
+      padding: 5,
+      borderWidth: 2,
+      borderColor: 'red'
     },
     facility: {
       margin: 9,
       marginTop: 0,
       height: 70,
       overflow: 'hidden',
-      backgroundColor: '#e8e3be',
+      backgroundColor: '#F5FCFF',
       borderRadius: 10,
       justifyContent: 'center'
     }
