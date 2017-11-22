@@ -13,6 +13,8 @@
 		"react": "16.0.0-beta.5",
 		"react-native": "0.49.3",
 		"react-native-button": "^2.1.0",
+		"react-native-letter-spacing": "^0.0.4",
+		"react-native-tableview-simple": "^0.17.1",
 		"react-navigation": "^1.0.0-beta.15"
 	},
 	"devDependencies": {
