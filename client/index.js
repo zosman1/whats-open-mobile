@@ -5,7 +5,8 @@ import {
   Text,
   View,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
@@ -63,21 +64,38 @@ export class MainScreen extends Component {
       {
         (this.state.Facilities != null) > 0 &&
         this.state.Facilities.map((facility) => {
-          let statusStyle = styles.closed;
-          if (isFacilityOpen(facility)) statusStyle = styles.open;
+          // let statusStyle = styles.closed;
+          // if (isFacilityOpen(facility)) statusStyle = styles.open;
 
           return (
-            <Button
-              key={facility.slug}
-              containerStyle={statusStyle}
-              onPress={() => navigate('Details', { facility: facility })} 
-            >
-            <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
+            // <Button
+            //   key={facility.slug}
+            //   containerStyle={statusStyle}
+            //   onPress={() => navigate('Details', { facility: facility })} 
+            // >
+            // <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
             
-            </Button>
+            // </Button>
+
+            <TouchableHighlight
+            key={facility.slug}
+            style={styles.facility}
+            underlayColor={isFacilityOpen(facility) ? '#006633' : '#AC1D37'}
+            onPress={() => navigate('Details', {facility: facility })}
+            >
+            <View style={{justifyContent:'center', flexDirection: 'row'}}>
+              <Text style={styles.facilityName}>{facility.facility_name}</Text>
+              <View style={{justifyContent:'center', margin: 7}}>
+                <View style={isFacilityOpen(facility) ? styles.openView : styles.closedView}> 
+                  <Text style={isFacilityOpen(facility) ? styles.openText : styles.closedText}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
+                </View>
+              </View>
+            </View> 
+            </TouchableHighlight>
           );
         })
       }
+      <View style={{height: 10}} />
       </ScrollView>
     );
   }
@@ -87,24 +105,55 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+    paddingTop: 10,
   },
   facilityName: {
+    // padding: 20,
+    flex: 1,
+    margin: 10,
+    fontSize: 19, 
     textAlign: 'center',
-    fontSize:20,    
+    textAlign: 'left'
+
   },
-  open: {
-      margin: 1,
+  openText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color:'green'
+  },
+  closedText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color:'red'
+  },
+  openView: {
       padding: 10,
-      height: 70,
-      overflow: 'hidden',
-      backgroundColor: 'green'
+      height: 30,
+      justifyContent: 'center',
+      // backgroundColor: 'green',
+      borderRadius: 10,
+      padding: 5,
+      borderWidth: 2,
+      borderColor: 'green'
     },
-    closed: {
-      margin: 1,
-      padding: 10,
+    closedView: {
+      padding: 10,      
+      height: 30,   
+      justifyContent: 'center',      
+      // backgroundColor: 'red',
+      borderRadius: 10,
+      padding: 5,
+      borderWidth: 2,
+      borderColor: 'red'
+    },
+    facility: {
+      margin: 9,
+      marginTop: 0,
       height: 70,
       overflow: 'hidden',
-      backgroundColor: 'red'
+      backgroundColor: '#eaecef',
+      borderRadius: 10,
+      justifyContent: 'center'
     }
 });
 
