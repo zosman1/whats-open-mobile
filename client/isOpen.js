@@ -4,7 +4,7 @@
  * @param facility The facility to find the active schedule for.
  * @returns {*} A schedule object
  */
-const getFacilityActiveSchedule = (facility) => {
+export const getFacilityActiveSchedule = (facility) => {
     const curDateTime = new Date();
 
     for (let i = 0; i < facility.special_schedules.length; i++) {
@@ -221,11 +221,3 @@ const daysTill = (dayFrom, dayTo) => {
 
     return days;
 };
-
-
-// export default {
-//     getFacilityActiveSchedule: getFacilityActiveSchedule,
-//     isFacilityOpen: isFacilityOpen,
-//     calcTimeTillOpen: calcTimeTillOpen,
-//     calcTimeTillClose: calcTimeTillClose
-// }
