@@ -86,11 +86,15 @@ export class MainScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {/* <View style={{height: 10}}/>  */}
         <FlatList
           data={this.state.facilities}
           keyExtractor={this._keyExtractor}
           renderItem={({item}) => (
             <ListItem facility={item} onPress={this._onPressItem}/>
+          )}
+          ListHeaderComponent={() => (
+            <View style={{height: 10}}/>
           )}
         />
       </View>
@@ -102,10 +106,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    paddingTop: 10,
   },
   facilityName: {
-    // padding: 20,
     flex: 1,
     margin: 10,
     fontSize: 19, 
