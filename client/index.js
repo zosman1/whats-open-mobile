@@ -85,13 +85,15 @@ export class MainScreen extends Component {
 
   render() {
     return (
-      <FlatList
-      data={this.state.facilities}
-      keyExtractor={this._keyExtractor}
-      renderItem={({item}) => (
-        <ListItem facility={item} onPress={this._onPressItem}/>
-      )}
-      />
+      <View style={styles.container}>
+        <FlatList
+          data={this.state.facilities}
+          keyExtractor={this._keyExtractor}
+          renderItem={({item}) => (
+            <ListItem facility={item} onPress={this._onPressItem}/>
+          )}
+        />
+      </View>
     );
   }
 }
