@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   AsyncStorage,
-  TouchableHighlight
+  TouchableHighlight,
+  FlatList
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Button from 'react-native-button';
@@ -14,11 +15,39 @@ import { fetchData, isOpen, sortFacilitys } from './data';
 import { isFacilityOpen, calcTimeTillOpen, calcTimeTillClose } from './isOpen';
 import { Details } from './details'
 
+class ListItem extends Component {
+  _onPressItem = (facility) => {
+    this.props.onPress(facility);
+  }
+  render() {
+    let facility = this.props.facility;
+    return (
+      <TouchableHighlight
+        key={facility.slug}
+        style={styles.facility}
+        underlayColor={isFacilityOpen(facility) ? '#006633' : '#AC1D37'}
+        onPress={() => this._onPressItem(facility)}
+      >
+        <View style={{justifyContent:'center', flexDirection: 'row'}}>
+          <Text style={styles.facilityName}>{facility.facility_name}</Text>
+          <View style={{justifyContent:'center', margin: 7}}>
+            <View style={isFacilityOpen(facility) ? styles.openView : styles.closedView}> 
+              <Text style={isFacilityOpen(facility) ? styles.openText : styles.closedText}>
+                {isFacilityOpen(facility) ? 'Open' : 'Closed'} 
+              </Text>
+            </View>
+          </View>
+        </View> 
+      </TouchableHighlight>
+  )
+  }
+}
+ 
 export class MainScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
-      Facilities: null
+      facilities: null
     }
   }
   static navigationOptions = {
@@ -28,10 +57,10 @@ export class MainScreen extends Component {
   componentWillMount() {
     // AsyncStorage.clear();
     // getting stored data on phone for offline use
-    if(this.state.Facilities == null){
-      AsyncStorage.getItem('Facilities').then((localData) => {
+    if(this.state.facilities == null){
+      AsyncStorage.getItem('facilities').then((localData) => {
         this.setState({
-          Facilities: sortFacilitys(JSON.parse(localData))          
+          facilities: sortFacilitys(JSON.parse(localData))          
         });
       });
     }
@@ -39,64 +68,30 @@ export class MainScreen extends Component {
     fetchData().then((data) => {
       if (!data) return;      
       this.setState({
-        Facilities: sortFacilitys(data)
+        facilities: sortFacilitys(data)
       });
-      AsyncStorage.setItem('Facilities', JSON.stringify(data));
+      AsyncStorage.setItem('facilities', JSON.stringify(data));
      })
   }
 
+  // extracting keys from data for react natives sanity
+  _keyExtractor = (item, index) => item.slug;
 
+  // handling onclick for ListItem
+  _onPressItem = (facility) => {
+    // updater functions are preferred for transactional updates
+    this.props.navigation.navigate('Details', {facility: facility })
+  }
 
   render() {
-    const { navigate } = this.props.navigation;
-    
-
-    // if (this.state.Facilities != null){ 
-    //   this.state.Facilities.sort((a,b) => {
-    //     if (isFacilityOpen(a) == isFacilityOpen(b)) return 0;
-    //     if (isFacilityOpen(a) && !isFacilityOpen(b)) return -1;
-    //     if (!isFacilityOpen(a) && isFacilityOpen(b)) return 1;
-    //   });
-    // }
-    // sortFacilitys(this.state.Facilities);
     return (
-      <ScrollView style={styles.container}>
-      {
-        (this.state.Facilities != null) > 0 &&
-        this.state.Facilities.map((facility) => {
-          // let statusStyle = styles.closed;
-          // if (isFacilityOpen(facility)) statusStyle = styles.open;
-
-          return (
-            // <Button
-            //   key={facility.slug}
-            //   containerStyle={statusStyle}
-            //   onPress={() => navigate('Details', { facility: facility })} 
-            // >
-            // <Text style={styles.facilityName}> {facility.facility_name} ❯ </Text>
-            
-            // </Button>
-
-            <TouchableHighlight
-            key={facility.slug}
-            style={styles.facility}
-            underlayColor={isFacilityOpen(facility) ? '#006633' : '#AC1D37'}
-            onPress={() => navigate('Details', {facility: facility })}
-            >
-            <View style={{justifyContent:'center', flexDirection: 'row'}}>
-              <Text style={styles.facilityName}>{facility.facility_name}</Text>
-              <View style={{justifyContent:'center', margin: 7}}>
-                <View style={isFacilityOpen(facility) ? styles.openView : styles.closedView}> 
-                  <Text style={isFacilityOpen(facility) ? styles.openText : styles.closedText}> {isFacilityOpen(facility) ? 'Open' : 'Closed'} </Text>
-                </View>
-              </View>
-            </View> 
-            </TouchableHighlight>
-          );
-        })
-      }
-      <View style={{height: 10}} />
-      </ScrollView>
+      <FlatList
+      data={this.state.facilities}
+      keyExtractor={this._keyExtractor}
+      renderItem={({item}) => (
+        <ListItem facility={item} onPress={this._onPressItem}/>
+      )}
+      />
     );
   }
 }
