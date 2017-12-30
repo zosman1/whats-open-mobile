@@ -55,17 +55,23 @@ export class MainScreen extends Component {
     title: "What's Open?",
   };  
 
-  componentWillMount() {
+  componentWillMount(isUpdate) {
+    // isUpdate should be true if
+    // this is coming from inside
+    // a component, or from an update
+
     // AsyncStorage.clear();
-    // getting stored data on phone for offline use
-    console.warn('compenentwillmount has been run')
-    if(this.state.facilities == null){
-      AsyncStorage.getItem('facilities').then((localData) => {
-        this.setState({
-          facilities: sortFacilitys(JSON.parse(localData)),
-          refreshing: false        
+
+    if(!isUpdate) {
+      // getting stored data on phone for offline use
+      if(this.state.facilities == null){
+        AsyncStorage.getItem('facilities').then((localData) => {
+          this.setState({
+            facilities: sortFacilitys(JSON.parse(localData)),
+            refreshing: false        
+          });
         });
-      });
+      }
     }
     //getting new data from server
     fetchData().then((data) => {
@@ -92,7 +98,7 @@ export class MainScreen extends Component {
     this.setState({
       refreshing: true
     }, () => {
-      this.componentWillMount();
+      this.componentWillMount(true);
     })
   }
 
