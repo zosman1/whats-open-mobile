@@ -47,7 +47,8 @@ export class MainScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
-      facilities: null
+      facilities: null,
+      refreshing: false
     }
   }
   static navigationOptions = {
@@ -57,10 +58,12 @@ export class MainScreen extends Component {
   componentWillMount() {
     // AsyncStorage.clear();
     // getting stored data on phone for offline use
+    console.warn('compenentwillmount has been run')
     if(this.state.facilities == null){
       AsyncStorage.getItem('facilities').then((localData) => {
         this.setState({
-          facilities: sortFacilitys(JSON.parse(localData))          
+          facilities: sortFacilitys(JSON.parse(localData)),
+          refreshing: false        
         });
       });
     }
@@ -68,7 +71,8 @@ export class MainScreen extends Component {
     fetchData().then((data) => {
       if (!data) return;      
       this.setState({
-        facilities: sortFacilitys(data)
+        facilities: sortFacilitys(data),
+        refreshing: false
       });
       AsyncStorage.setItem('facilities', JSON.stringify(data));
      })
@@ -81,6 +85,15 @@ export class MainScreen extends Component {
   _onPressItem = (facility) => {
     // updater functions are preferred for transactional updates
     this.props.navigation.navigate('Details', {facility: facility })
+  }
+
+  // handling the pull down to refresh
+  _handleRefresh = () => {
+    this.setState({
+      refreshing: true
+    }, () => {
+      this.componentWillMount();
+    })
   }
 
   render() {
@@ -96,6 +109,8 @@ export class MainScreen extends Component {
           ListHeaderComponent={() => (
             <View style={{height: 10}}/>
           )}
+          refreshing={this.state.refreshing}
+          onRefresh={this._handleRefresh}
         />
       </View>
     );
