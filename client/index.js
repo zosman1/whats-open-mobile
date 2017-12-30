@@ -54,25 +54,32 @@ export class MainScreen extends Component {
   static navigationOptions = {
     title: "What's Open?",
   };  
-
   componentWillMount(isUpdate) {
     // isUpdate should be true if
     // this is coming from inside
     // a component, or from an update
 
     // AsyncStorage.clear();
-
-    if(!isUpdate) {
-      // getting stored data on phone for offline use
-      if(this.state.facilities == null){
-        AsyncStorage.getItem('facilities').then((localData) => {
-          this.setState({
-            facilities: sortFacilitys(JSON.parse(localData)),
-            refreshing: false        
-          });
+    
+    // getting stored data on phone for offline use
+    if(this.state.facilities == null){
+      AsyncStorage.getItem('facilities').then((localData) => {
+        this.setState({
+          facilities: sortFacilitys(JSON.parse(localData)),
+          refreshing: false        
         });
-      }
+      });
     }
+    
+
+    //getting new data from server
+    this._updateFromServer();
+  }
+
+
+  // updating dom from server
+  _updateFromServer = () => {
+    console.warn(1)
     //getting new data from server
     fetchData().then((data) => {
       if (!data) return;      
@@ -81,9 +88,8 @@ export class MainScreen extends Component {
         refreshing: false
       });
       AsyncStorage.setItem('facilities', JSON.stringify(data));
-     })
+      })
   }
-
   // extracting keys from data for react natives sanity
   _keyExtractor = (item, index) => item.slug;
 
@@ -98,7 +104,7 @@ export class MainScreen extends Component {
     this.setState({
       refreshing: true
     }, () => {
-      this.componentWillMount(true);
+      this._updateFromServer();
     })
   }
 
