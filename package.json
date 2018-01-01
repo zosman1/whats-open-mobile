@@ -9,6 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"eslint": "^4.14.0",
 		"moment": "^2.19.1",
 		"react": "16.0.0",
 		"react-native": "0.51.0",
@@ -20,7 +21,9 @@
 	"devDependencies": {
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
+		"eslint-config-prettier": "^2.9.0",
 		"jest": "21.2.1",
+		"prettier": "^1.9.2",
 		"react-test-renderer": "16.0.0-beta.5"
 	},
 	"jest": {
